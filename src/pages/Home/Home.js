@@ -43,9 +43,9 @@ const Home = () => {
             <section className='container hero'>
                 <div className='hero-text'>
                     <h2>Inventario {"&"} Control de Stock </h2>
-                    <p>Inventory system to control and manage proucts
-                        in the warehouse in real timeand integrated to make
-                        it easier to develop your business.</p>
+                    <p>Sistema de inventario para controlar y gestionar productos.
+                        en el almacén en tiempo real e integrado para realizar
+                        será más fácil desarrollar su negocio.</p>
                     <div className='hero-buttons'>
                         <button className='--btn --btn-secondary'>
 

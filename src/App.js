@@ -20,6 +20,8 @@ import EditProduct from "./pages/editProduct/EditProduct";
 import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/profile/EditProfile";
 import Contact from "./pages/contact/Contact";
+import History from "./pages/history/History";
+
 
 
 
@@ -94,6 +96,14 @@ function App() {
                </Sidebar>
             }
             />
+            <Route path="/history" element={
+               <Sidebar>
+                  <Layout>
+                     <History />
+                  </Layout>
+               </Sidebar>
+            } />
+
 
             <Route path="/contact-us" element={
                <Sidebar>

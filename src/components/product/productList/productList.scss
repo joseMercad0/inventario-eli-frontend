@@ -59,3 +59,42 @@
     }
   }
 }
+
+.guardar-btn {
+  margin-left: 10px;
+  background: #40bf40;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding:6px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+  &:hover {
+    background: #228b22;
+  }
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+td > button {
+  margin: 0 4px;
+  background: #202040;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  &:hover {
+    background: #39398f;
+  }
+}

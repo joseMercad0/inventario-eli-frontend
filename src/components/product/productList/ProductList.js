@@ -7,18 +7,26 @@ import Search from '../../search/Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { FILTER_PRODUCTS, selectFilteredProducts } from '../../../redux/features/product/filterSlice';
 import ReactPaginate from 'react-paginate';
-import { confirmAlert } from 'react-confirm-alert'; 
-import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { deleteProduct, getProducts } from '../../../redux/features/product/productSlice';
 import { Link } from 'react-router-dom';
+import { updateProduct } from '../../../redux/features/product/productSlice';
 
 
 
 const ProductList = ({ products, isLoading }) => {
   const [search, setSearch] = useState("");
   const filteredProducts = useSelector(selectFilteredProducts);
+  const [editedQuantities, setEditedQuantities] = useState({});
 
   const dispatch = useDispatch()
+
+  // Llama así al hacer click en los botones + y -
+  const handleStockChange = (id, newQuantity) => {
+    dispatch(updateProduct({ id, formData: { quantity: newQuantity } }))
+      .then(() => dispatch(getProducts())); // Opcional, refresca la lista después de actualizar
+  };
 
   const shortenText = (text, n) => {
     if (text.length > n) {
@@ -28,10 +36,10 @@ const ProductList = ({ products, isLoading }) => {
     return text;
   };
 
-  const delProduct = async(id) => {
-      console.log(id);
-      await dispatch(deleteProduct(id));
-      await dispatch(getProducts());
+  const delProduct = async (id) => {
+    console.log(id);
+    await dispatch(deleteProduct(id));
+    await dispatch(getProducts());
   };
 
   const confirmDelete = (id) => {
@@ -118,18 +126,65 @@ const ProductList = ({ products, isLoading }) => {
                       <td>{shortenText(name, 16)}</td>
                       <td>{category}</td>
                       <td>{"s/"}{price}</td>
-                      <td>{quantity}</td>
+                      <td>
+                        <button
+                          onClick={() =>
+                            setEditedQuantities((prev) => ({
+                              ...prev,
+                              [_id]: Math.max(Number(prev[_id] ?? quantity) - 1, 0),
+                            }))
+                          }
+                        >
+                          -
+                        </button>
+                        {editedQuantities[_id] !== undefined ? editedQuantities[_id] : quantity}
+                        <button
+                          onClick={() =>
+                            setEditedQuantities((prev) => ({
+                              ...prev,
+                              [_id]: Number(prev[_id] ?? quantity) + 1,
+                            }))
+                          }
+                        >
+                          +
+                        </button>
+                        {editedQuantities[_id] !== undefined &&
+                          editedQuantities[_id] !== quantity && (
+                            <button
+                              className="guardar-btn"
+                              onClick={() => {
+                                dispatch(
+                                  updateProduct({
+                                    id: _id,
+                                    formData: { quantity: editedQuantities[_id] },
+                                  })
+                                ).then(() => {
+                                  dispatch(getProducts());
+                                  setEditedQuantities((prev) => {
+                                    const copy = { ...prev };
+                                    delete copy[_id];
+                                    return copy;
+                                  });
+                                });
+                              }}
+                            >
+                              Guardar
+                            </button>
+                          )}
+                      </td>
+
+
                       <td>{"s/"}{price * quantity}</td>
                       <td className='icons'>
                         <span>
                           <Link to={`/product-detail/${_id}`}>
-                          <AiOutlineEye size={25} color={"purple"} />
+                            <AiOutlineEye size={25} color={"purple"} />
                           </Link>
-                          
+
                         </span>
                         <span>
-                        <Link to={`/edit-product/${_id}`}>
-                          <FaEdit size={20} color={"green"} />
+                          <Link to={`/edit-product/${_id}`}>
+                            <FaEdit size={20} color={"green"} />
                           </Link>
                         </span>
                         <span>

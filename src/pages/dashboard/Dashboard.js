@@ -5,6 +5,7 @@ import { selectIsLoggedIn } from '../../redux/features/auth/authSlice';
 import { getProducts } from '../../redux/features/product/productSlice';
 import ProductList from '../../components/product/productList/ProductList';
 import ProductSummary from '../../components/product/productSummary/ProductSummary';
+import LowStockList from '../../components/product/LowStockList/LowStockList';
 
 
 
@@ -30,6 +31,7 @@ const Dashboard = () => {
 
         <ProductSummary products={products}/>
         <ProductList products={products} isLoading={isLoading}/>
+        <LowStockList products={products} />
     </div>
   )
 }

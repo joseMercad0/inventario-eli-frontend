@@ -1,4 +1,4 @@
-import { FaTh, FaRegChartBar, FaCommentAlt } from "react-icons/fa";
+import { FaTh, FaRegChartBar, FaCommentAlt, FaHistory } from "react-icons/fa";
 import { BiImageAdd } from "react-icons/bi";
 
 
@@ -26,6 +26,11 @@ const menu = [
         path: "/edit-profile",
       },
     ],
+  },
+  {
+    title: "Historial",
+    icon: <FaHistory />, // Necesitas importar este icono arriba
+    path: "/history",
   },
   {
     title: "Contactar",
