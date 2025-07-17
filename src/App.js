@@ -21,8 +21,9 @@ import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/profile/EditProfile";
 import Contact from "./pages/contact/Contact";
 import History from "./pages/history/History";
-
-
+import SalesDashboard from "./pages/sales/SalesDashboard";
+import InformeVentas from "./pages/reports/InformeVentas";
+import ReportList from "./components/reports/ReportList";
 
 
 axios.defaults.withCredentials = true;
@@ -104,7 +105,15 @@ function App() {
                </Sidebar>
             } />
 
+            <Route path="/ventas" element={
+               <Sidebar>
+                  <Layout>
+                     <SalesDashboard />
+                     </Layout>
+               </Sidebar>} />
 
+             <Route path="/informe-ventas" element={<InformeVentas />} />
+             <Route path="/informes" element={<ReportList />} />  
             <Route path="/contact-us" element={
                <Sidebar>
                   <Layout>

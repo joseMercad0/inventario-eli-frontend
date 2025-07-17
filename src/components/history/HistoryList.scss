@@ -22,3 +22,66 @@
         background-color: #f2f2f2;
     }
 }
+
+.history-container {
+  width: 98%;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 3px 12px #0002;
+  padding: 1.2rem 2.2rem 2.5rem 2.2rem;
+}
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2em;
+}
+.history-search {
+  flex: 1 1 60%;
+  border-radius: 7px;
+  border: 1.3px solid #b7c2df;
+  padding: 0.7em 1em;
+  font-size: 1.05em;
+  outline: none;
+  margin-right: 1.2em;
+}
+.history-clear-btn {
+  background: linear-gradient(87deg, #d72a3a 75%, #ff626c 100%);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  padding: 0.8em 1.3em;
+  font-size: 1.09em;
+  cursor: pointer;
+  box-shadow: 0 1px 6px #0002;
+  transition: background 0.18s;
+}
+.history-clear-btn:hover {
+  background: linear-gradient(87deg, #b51827 75%, #ff626c 100%);
+}
+.history-table-scroll {
+  max-height: 350px;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1.2px solid #eef1fb;
+  box-shadow: 0 2px 6px #0001;
+}
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 550px;
+  font-size: 1.07em;
+}
+.history-table th, .history-table td {
+  padding: 0.75em 0.5em;
+  text-align: left;
+}
+.history-table thead tr {
+  background: #eef3fc;
+}
+.history-table tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+

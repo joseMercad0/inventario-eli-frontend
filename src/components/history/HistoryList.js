@@ -1,32 +1,52 @@
-import React from 'react';
-import './HistoryList.scss'; // Agrega tu archivo SCSS aquí
+import React, { useState } from "react";
+import "./HistoryList.scss";
 
-export default function HistoryList({ history }) {
-    return (
-        <div className="history-container">
-            <h2>Historial de Productos</h2>
-            <table className="history-table">
-                <thead>
-                    <tr>
-                        <th>Acción</th>
-                        <th>Producto</th>
-                        <th>Usuario</th>
-                        <th>Fecha</th>
-                        <th>Detalles</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {history.map((item) => (
-                        <tr key={item._id}>
-                            <td>{item.action.toUpperCase()}</td>
-                            <td>{item.product.name}</td>
-                            <td>{item.user.name} ({item.user.email})</td>
-                            <td>{new Date(item.date).toLocaleString()}</td>
-                            <td>{item.details}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
-}
+const HistoryList = ({ history = [], onClearHistory }) => {
+  const [search, setSearch] = useState("");
+
+  const filteredHistory = history.filter(h =>
+    h.details?.toLowerCase().includes(search.toLowerCase()) ||
+    h.action?.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="history-list">
+      <div className="history-header">
+        <input
+          placeholder="Buscar historial..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        <button onClick={onClearHistory}>Borrar historial</button>
+      </div>
+      <div className="history-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Acción</th>
+              <th>Detalle</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredHistory.length > 0 ? (
+              filteredHistory.map((h, i) => (
+                <tr key={h._id || i}>
+                  <td>{new Date(h.createdAt).toLocaleString()}</td>
+                  <td>{h.action}</td>
+                  <td>{h.details}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={3} style={{ textAlign: "center", color: "#888" }}>No hay historial.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default HistoryList;

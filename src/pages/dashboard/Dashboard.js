@@ -31,6 +31,7 @@ const Dashboard = () => {
 
         <ProductSummary products={products}/>
         <ProductList products={products} isLoading={isLoading}/>
+        
         <LowStockList products={products} />
     </div>
   )
