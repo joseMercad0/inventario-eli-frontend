@@ -1,15 +1,16 @@
 import SaleForm from "../../components/sales/SaleForm";
-import SalesChart from "../../components/sales/SalesChart";
+//import SalesChart from "../../components/sales/SalesChart";
 import SaleHistory from "../../components/sales/SaleHistory";
 import { useNavigate } from "react-router-dom";
 
 export default function SalesDashboard() {
   const navigate = useNavigate();
   // Lógica para refrescar productos/ventas si quieres
+  //<SalesChart />
   return (
     <div>
       <SaleForm />
-      <SalesChart />
+      
       <SaleHistory />
        <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 18 }}>
         <button

@@ -73,7 +73,7 @@ const SaleHistory = () => {
   };
 
   return (
-    <div className="sales-section" style={{margin: "16px 0"}}>
+    <div className="sales-section" style={{ margin: "16px 0" }}>
       <h3>Historial de Ventas</h3>
       <div className="history-header">
         <input
@@ -82,18 +82,18 @@ const SaleHistory = () => {
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
-        <button onClick={handleExportCSV} style={{marginLeft: 10}}>Exportar CSV</button>
-        <button onClick={handleExportPDF} style={{marginLeft: 10}}>Exportar PDF</button>
+      
       </div>
       <div>
         <label>De: <input type="date" value={from} onChange={e => setFrom(e.target.value)} /></label>
         <label> A: <input type="date" value={to} onChange={e => setTo(e.target.value)} /></label>
         <button onClick={fetchSales}>Buscar</button>
       </div>
-      <div className="history-table-scroll" style={{marginTop: 12, maxHeight: 340, overflowY: "auto"}}>
-        <table className="sale-history-table" style={{width: "100%"}}>
+      <div className="history-table-scroll" style={{ marginTop: 12, maxHeight: 340, overflowY: "auto" }}>
+        <table className="sale-history-table" style={{ width: "100%" }}>
           <thead>
             <tr>
+              <th>ID Venta</th>
               <th>Fecha</th>
               <th>Productos</th>
               <th>Cantidad</th>
@@ -104,20 +104,20 @@ const SaleHistory = () => {
           <tbody>
             {filtered.map(sale => (
               <tr key={sale._id}>
+                <td style={{ fontFamily: "monospace" }}>{sale._id}</td>
                 <td>{new Date(sale.date).toLocaleDateString()}</td>
                 <td>
-                <ul>
-                  {sale.items.map((item, idx) => (
-                    <li key={idx}>
-                      {item.product?.name || item.name || "—"} 
-                      <span style={{color: "#7198e7", fontSize: "0.93em"}}>
-                        ({item.product?.category || item.category || "—"})
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </td>
-
+                  <ul>
+                    {sale.items.map((item, idx) => (
+                      <li key={idx}>
+                        {item.product?.name || item.name || "—"}
+                        <span style={{ color: "#7198e7", fontSize: "0.93em" }}>
+                          ({item.product?.category || item.category || "—"})
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </td>
                 <td>
                   <ul>
                     {sale.items.map(item => (
@@ -132,10 +132,11 @@ const SaleHistory = () => {
                     ))}
                   </ul>
                 </td>
-                <td>s/{sale.total}</td>
+                <td>s/{Number(sale.total).toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
+
         </table>
       </div>
     </div>

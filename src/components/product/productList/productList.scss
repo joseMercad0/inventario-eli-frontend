@@ -6,7 +6,7 @@
   margin-bottom: 2rem;
 
   h3 {
-    color: #2a2452;
+    color: #000000;
     margin-bottom: 12px;
     font-size: 1.3em;
   }
@@ -25,12 +25,13 @@
     th, td {
       padding: 10px 12px;
       text-align: left;
+      color: #070707;
       border-bottom: 1px solid #eaeaea;
     }
 
     th {
       background: #f8f8ff;
-      color: #373780;
+      color: #070707;
       font-weight: 600;
     }
 
@@ -64,4 +65,29 @@
       background: #5346b8;
     }
   }
+}
+
+.stock-btn {
+  padding: 3px 9px;
+  margin: 0 3px;
+  background: #202040;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  &:hover:not(:disabled) {
+    background: #39398f;
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+.quantity-value {
+  display: inline-block;
+  width: 36px;
+  text-align: center;
+  font-family: monospace;
 }

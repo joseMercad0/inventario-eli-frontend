@@ -8,6 +8,8 @@ export const getHistory = async () => {
   return response.data;
 };
 
+const res = await axios.get(`${BACKEND_URL}/api/history/sales`, { withCredentials: true });
+
 export const clearHistory = async (token) => {
   // Cambia la URL por la ruta real en tu backend
   return await fetch('/api/history/clear', {

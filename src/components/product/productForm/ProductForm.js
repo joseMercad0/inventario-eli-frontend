@@ -9,17 +9,7 @@ const ProductForm = ({ product, productImage, imagePreview, description, setDesc
   return (<div className='add-product'>
     <Card cardClass={"card"}>
       <form onSubmit={saveProduct}>
-        <Card cardClass={"group"}>
-          <label >Imagen Producto</label>
-          <code className='--color-dark'>Formatos Aceptados: jpg, jpeg, png</code>
-          <input type='file' name='image' onChange={(e) => handleImageChange(e)} />
-          {imagePreview != null ? (
-            <div className='image-preview'>
-              <img src={imagePreview} alt='producto' />
-            </div>
-          ) : (<p>NO imagen del producto</p>
-          )}
-        </Card>
+     
         <label>Nombre del Producto:</label>
         <input type='text' placeholder='Nombre del Producto' name='name' value={product?.name} onChange={handleInputChange} />
         <label>Categoria del Producto:</label>
@@ -76,5 +66,17 @@ ProductForm.formats = [
   "code-block",
   "align",
 ];
+
+     // <Card cardClass={"group"}>
+     //     <label >Imagen Producto</label>
+     //     <code className='--color-dark'>Formatos Aceptados: jpg, jpeg, png</code>
+     //     <input type='file' name='image' onChange={(e) => handleImageChange(e)} />
+     //     {imagePreview != null ? (
+     //       <div className='image-preview'>
+     //         <img src={imagePreview} alt='producto' />
+     //       </div>
+     //     ) : (<p>NO imagen del producto</p>
+     //     )}
+     //   </Card>
 
 export default ProductForm

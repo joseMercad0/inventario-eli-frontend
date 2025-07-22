@@ -10,7 +10,7 @@ const HistoryList = ({ history = [], onClearHistory }) => {
   );
 
   return (
-    <div className="history-list">
+    <div className="history-table">
       <div className="history-header">
         <input
           placeholder="Buscar historial..."
@@ -25,6 +25,7 @@ const HistoryList = ({ history = [], onClearHistory }) => {
             <tr>
               <th>Fecha</th>
               <th>Acción</th>
+              <th>Producto</th>
               <th>Detalle</th>
             </tr>
           </thead>
@@ -32,8 +33,9 @@ const HistoryList = ({ history = [], onClearHistory }) => {
             {filteredHistory.length > 0 ? (
               filteredHistory.map((h, i) => (
                 <tr key={h._id || i}>
-                  <td>{new Date(h.createdAt).toLocaleString()}</td>
+                  <td>{h.date ? new Date(h.date).toLocaleString() : "—"}</td>
                   <td>{h.action}</td>
+                  <td>{h.product?.name || "—"}</td>
                   <td>{h.details}</td>
                 </tr>
               ))

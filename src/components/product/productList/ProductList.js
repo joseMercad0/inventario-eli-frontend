@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./productList.scss";
 import { SpinnerImg } from "../../loader/Loader";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { FaEdit, FaTrashAlt, FaSave } from "react-icons/fa";
 import { AiOutlineEye } from "react-icons/ai";
 import Search from '../../search/Search';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,8 +19,26 @@ const ProductList = ({ products, isLoading }) => {
   const [search, setSearch] = useState("");
   const filteredProducts = useSelector(selectFilteredProducts);
   const [editedQuantities, setEditedQuantities] = useState({});
+  const [pendingQuantity, setPendingQuantity] = useState({});
 
   const dispatch = useDispatch()
+
+  // Suma visual local (pero solo cambia visualmente)
+  const handlePlusClick = (productId) => {
+    setPendingQuantity(prev => ({
+      ...prev,
+      [productId]: (prev[productId] || 0) + 1
+    }));
+  };
+
+  // Guardar: ahora sí actualiza el stock real
+  const handleSaveClick = (productId, currentQuantity) => {
+    const cantidadExtra = pendingQuantity[productId] || 0;
+    if (cantidadExtra > 0) {
+      handleStockChange(productId, currentQuantity + cantidadExtra);
+      setPendingQuantity(prev => ({ ...prev, [productId]: 0 })); // Reset visual
+    }
+  };
 
   // Llama así al hacer click en los botones + y -
   const handleStockChange = (id, newQuantity) => {
@@ -88,44 +106,63 @@ const ProductList = ({ products, isLoading }) => {
 
 
   return (
-  <div className="product-list-container">
-    <h3>Lista de productos del inventario</h3>
-    <p>Consulta productos, cantidades y estado actual del almacén.</p>
-    <table>
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Categoría</th>
-          <th>Precio</th>
-          <th>Cantidad</th>
-          {/* <th>Acciones</th> si usas acciones */}
-        </tr>
-      </thead>
-      <tbody>
-        {products.map(product => (
-          <tr key={product._id}>
-            <td>
-              {product.name}
-              {product.quantity < 5 && (
-                <span className="low-stock-badge">¡Bajo stock!</span>
-              )}
-            </td>
-            <td>{product.category}</td>
-            <td>s/{product.price}</td>
-            <td>{product.quantity}</td>
-            {/* <td>
-              <button className="product-action-btn">Editar</button>
-            </td> */}
+    <div className="product-list-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Acciones</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-);
+        </thead>
+        <tbody>
+          {products.map(product => {
+            const sumaPendiente = pendingQuantity[product._id] || 0;
+            return (
+              <tr key={product._id}>
+                <td>{product.name}</td>
+                <td>{product.category}</td>
+                <td>s/{product.price}</td>
+                <td>
+                  {Number(product.quantity) + Number(sumaPendiente)}
+                  <button
+                    className="stock-btn"
+                    onClick={() => handlePlusClick(product._id)}
+                    title="Sumar al stock"
+                    style={{ marginLeft: "10px" }}
+                  >+</button>
+                  {sumaPendiente > 0 && (
+                    <button
+                      className="save-btn"
+                      onClick={() => handleSaveClick(product._id, Number(product.quantity))}
+                      style={{ marginLeft: "5px" }}
+                      title="Guardar"
+                    >
+                      <FaSave color="royalblue" />
+                    </button>
+                  )}
+                </td>
+                <td className='icons'>
+                  <span>
+                    <Link to={`/edit-product/${product._id}`}>
+                      <FaEdit size={20} color={"green"} />
+                    </Link>
+                  </span>
+                  <span>
+                    <FaTrashAlt size={25} color={"red"} onClick={() => confirmDelete(product._id)} />
+                  </span>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
-}
-  //<span>
-    // <FaTrashAlt size={25} color={"red"} onClick={() => confirmDelete(_id)} />
-   //</span>
+
 
 export default ProductList;
